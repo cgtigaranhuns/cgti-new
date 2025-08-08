@@ -9,7 +9,7 @@
     <nav aria-label="breadcrumb" class="mb-4">
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="{{ route('home') }}">Início</a></li>
-            <li class="breadcrumb-item"><a href="{{ route('documentos.index') }}">Documentos</a></li>
+            <li class="breadcrumb-item"><a href="{{ route('documentos.index') }}">Documentosa</a></li>
             <li class="breadcrumb-item active" aria-current="page">{{ Str::limit($documento->titulo, 50) }}</li>
         </ol>
     </nav>
@@ -35,15 +35,15 @@
                             </div>
                         </div>
                     </div>
-                    
+
                     <!-- Descrição -->
                     @if($documento->descricao)
-                        <div class="mb-4">
-                            <h5 class="fw-bold mb-3">Descrição</h5>
-                            <p class="text-muted lh-lg">{{ $documento->descricao }}</p>
-                        </div>
+                    <div class="mb-4">
+                        <h5 class="fw-bold mb-3">Descrição</h5>
+                        <p class="text-muted lh-lg">{{ $documento->descricao }}</p>
+                    </div>
                     @endif
-                    
+
                     <!-- Informações do Arquivo -->
                     <div class="mb-4">
                         <h5 class="fw-bold mb-3">Informações do Arquivo</h5>
@@ -80,17 +80,17 @@
                                     <i class="bi bi-calendar3 text-primary me-3" style="font-size: 1.5rem;"></i>
                                     <div>
                                         <h6 class="mb-0">Publicado em</h6>
-                                        <small class="text-muted">{{ $documento->created_at->format('d/m/Y H:i') }}</small>
+                                        <small
+                                            class="text-muted">{{ $documento->created_at->format('d/m/Y H:i') }}</small>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    
+
                     <!-- Ações -->
                     <div class="d-grid gap-2 d-md-flex">
-                        <a href="{{ route('documentos.download', $documento) }}" 
-                           class="btn btn-cgti btn-lg">
+                        <a href="{{ route('documentos.download', $documento) }}" class="btn btn-cgti btn-lg">
                             <i class="bi bi-download me-2"></i>Baixar Documento
                         </a>
                         <button class="btn btn-outline-cgti btn-lg" onclick="compartilharDocumento()">
@@ -100,7 +100,7 @@
                 </div>
             </div>
         </div>
-        
+
         <!-- Sidebar -->
         <div class="col-lg-4">
             <!-- Documentos Relacionados -->
@@ -112,41 +112,42 @@
                 </div>
                 <div class="card-body p-0">
                     @php
-                        $relacionados = \App\Models\Documento::ativo()
-                            ->where('categoria', $documento->categoria)
-                            ->where('id', '!=', $documento->id)
-                            ->orderBy('created_at', 'desc')
-                            ->limit(5)
-                            ->get();
+                    $relacionados = \App\Models\Documento::ativo()
+                    ->where('categoria', $documento->categoria)
+                    ->where('id', '!=', $documento->id)
+                    ->orderBy('created_at', 'desc')
+                    ->limit(5)
+                    ->get();
                     @endphp
-                    
+
                     @forelse($relacionados as $relacionado)
-                        <div class="p-3 border-bottom">
-                            <div class="d-flex align-items-start">
-                                <i class="bi {{ $relacionado->arquivo_icone }} text-primary me-2" style="font-size: 1.2rem;"></i>
-                                <div class="flex-grow-1">
-                                    <h6 class="mb-1">
-                                        <a href="{{ route('documentos.show', $relacionado) }}" 
-                                           class="text-decoration-none text-dark hover-primary">
-                                            {{ Str::limit($relacionado->titulo, 50) }}
-                                        </a>
-                                    </h6>
-                                    <small class="text-muted">
-                                        {{ $relacionado->arquivo_tamanho_formatado }} • 
-                                        {{ $relacionado->downloads }} downloads
-                                    </small>
-                                </div>
+                    <div class="p-3 border-bottom">
+                        <div class="d-flex align-items-start">
+                            <i class="bi {{ $relacionado->arquivo_icone }} text-primary me-2"
+                                style="font-size: 1.2rem;"></i>
+                            <div class="flex-grow-1">
+                                <h6 class="mb-1">
+                                    <a href="{{ route('documentos.show', $relacionado) }}"
+                                        class="text-decoration-none text-dark hover-primary">
+                                        {{ Str::limit($relacionado->titulo, 50) }}
+                                    </a>
+                                </h6>
+                                <small class="text-muted">
+                                    {{ $relacionado->arquivo_tamanho_formatado }} •
+                                    {{ $relacionado->downloads }} downloads
+                                </small>
                             </div>
                         </div>
+                    </div>
                     @empty
-                        <div class="p-3 text-center text-muted">
-                            <i class="bi bi-files mb-2" style="font-size: 2rem;"></i>
-                            <p class="mb-0">Nenhum documento relacionado</p>
-                        </div>
+                    <div class="p-3 text-center text-muted">
+                        <i class="bi bi-files mb-2" style="font-size: 2rem;"></i>
+                        <p class="mb-0">Nenhum documento relacionado</p>
+                    </div>
                     @endforelse
                 </div>
             </div>
-            
+
             <!-- Categorias -->
             <div class="card border-0 shadow-sm">
                 <div class="card-header bg-light">
@@ -156,18 +157,18 @@
                 </div>
                 <div class="card-body">
                     @foreach(\App\Models\Documento::getCategorias() as $key => $nome)
-                        @if($key !== $documento->categoria)
-                            <a href="{{ route('documentos.index', ['categoria' => $key]) }}" 
-                               class="btn btn-outline-secondary btn-sm mb-2 me-2">
-                                {{ $nome }}
-                            </a>
-                        @endif
+                    @if($key !== $documento->categoria)
+                    <a href="{{ route('documentos.index', ['categoria' => $key]) }}"
+                        class="btn btn-outline-secondary btn-sm mb-2 me-2">
+                        {{ $nome }}
+                    </a>
+                    @endif
                     @endforeach
                 </div>
             </div>
         </div>
     </div>
-    
+
     <!-- Voltar para lista -->
     <div class="row mt-5">
         <div class="col-12 text-center">
@@ -199,7 +200,7 @@
         width: 80px;
         height: 80px;
     }
-    
+
     .file-icon-large i {
         font-size: 3rem !important;
     }
@@ -210,9 +211,9 @@
 @push('scripts')
 <script>
 function compartilharDocumento() {
-    const titulo = @json($documento->titulo);
+    const titulo = @json($documento - > titulo);
     const url = window.location.href;
-    
+
     if (navigator.share) {
         navigator.share({
             title: titulo,
@@ -228,7 +229,7 @@ function compartilharDocumento() {
             btn.innerHTML = '<i class="bi bi-check me-2"></i>Link Copiado!';
             btn.classList.remove('btn-outline-cgti');
             btn.classList.add('btn-success');
-            
+
             setTimeout(() => {
                 btn.innerHTML = originalText;
                 btn.classList.remove('btn-success');
@@ -240,4 +241,3 @@ function compartilharDocumento() {
 </script>
 @endpush
 @endsection
-
