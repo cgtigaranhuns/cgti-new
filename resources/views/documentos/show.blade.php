@@ -9,7 +9,7 @@
     <nav aria-label="breadcrumb" class="mb-4">
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="{{ route('home') }}">Início</a></li>
-            <li class="breadcrumb-item"><a href="{{ route('documentos.index') }}">Documentos</a></li>
+            <li class="breadcrumb-item"><a href="{{ route('documentos.index') }}">Documentos </a></li>
             <li class="breadcrumb-item active" aria-current="page">{{ Str::limit($documento->titulo, 50) }}</li>
         </ol>
     </nav>
