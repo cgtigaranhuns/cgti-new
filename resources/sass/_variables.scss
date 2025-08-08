@@ -1,0 +1,44 @@
+// CGTI IFPE Colors
+$primary: #0A5517;
+$secondary: #19882C;
+$success: #198754;
+$info: #0DCAF0;
+$warning: #FFC107;
+$danger: #DC3545;
+$light: #F8F9FA;
+$dark: #212529;
+
+// Custom colors
+$cgti-green: #0A5517;
+$cgti-green-light: #19882C;
+$cgti-green-dark: #025310;
+
+// Body
+$body-bg: #ffffff;
+$body-color: #212529;
+
+// Typography
+$font-family-sans-serif: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+$font-size-base: 1rem;
+$line-height-base: 1.6;
+
+// Headings
+$headings-font-weight: 600;
+$headings-color: $cgti-green-dark;
+
+// Links
+$link-color: $cgti-green;
+$link-hover-color: $cgti-green-dark;
+
+// Buttons
+$btn-border-radius: 0.5rem;
+$btn-font-weight: 500;
+
+// Cards
+$card-border-radius: 1rem;
+$card-box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+
+// Navbar
+$navbar-padding-y: 1rem;
+$navbar-brand-font-size: 1.5rem;
+
