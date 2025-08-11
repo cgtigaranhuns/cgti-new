@@ -1,12 +1,12 @@
 <!-- Header Principal -->
 
 <header class="header-cgti"
-    style="background-image: url('img/hero-bg.png'); background-size: cover; background-position: center;">
+    style="background-image: url('image/hero-bg.png'); background-size: cover; background-position: center;">
     <div class="container">
         <div class="row align-items-center">
             <div class="col-md-2 text-center text-md-start mb-3 mb-md-0">
                 <a href="{{ route('home') }}">
-                    <img src="{{ asset('img/cgti-logo2.png') }}" style="width: 180px; max-width: 600px; height: auto;"
+                    <img src="{{ asset('image/cgti-logo2.png') }}" style="width: 180px; max-width: 600px; height: auto;"
                         alt="CGTI Logo">
                 </a>
             </div>

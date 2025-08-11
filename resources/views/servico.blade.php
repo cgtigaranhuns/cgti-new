@@ -4,35 +4,40 @@
 @section('description', 'Portal da Coordenação de Gestão de Tecnologia da Informação do IFPE Campus Garanhuns. Acesse
 nossos serviços e sistemas.')
 
+<script src='https://kit.fontawesome.com/a076d05399.js' crossorigin='anonymous'> </script>
+
 @section('content')
 <div class="container">
-    <!-- Hero Section 
+    <!-- Hero Section -->
     <section class="row mb-5">
         <div class="col-12">
             <div class="hero-section p-5 text-center fade-in-up">
                 <div class="hero-content">
                     <h1 class="display-4 fw-bold text-primary mb-3">
-                        Bem-vindo à CGTI
+                        Serviços Digitais
                     </h1>
-                    <p class="lead mb-4">
-                        Coordenação de Gestão de Tecnologia da Informação do IFPE Campus Garanhuns.
-                        Oferecemos soluções tecnológicas e serviços digitais para a comunidade acadêmica.
-                    </p>
+
                     <div class="d-flex flex-column flex-md-row gap-3 justify-content-center">
-                        <a href="#servicos" class="btn btn-cgti btn-lg">
-                            <i class="bi bi-grid-3x3-gap me-2"></i>Ver Serviços
+                        <a href="#garanhuns" class="btn btn-cgti btn-lg">
+                            <i class="bi bi-globe me-2"></i>Sistemas da CGTI
                         </a>
-                        <a href="{{ route('contato') }}" class="btn btn-outline-cgti btn-lg">
-                            <i class="bi bi-envelope me-2"></i>Entre em Contato
+                        <a href="#internos" class="btn btn-cgti btn-lg">
+                            <i class="bi bi-geo-alt-fill me-2"></i>Sistemas da Intranet
+                        </a>
+                        <a href="#institucional" class="btn btn-cgti btn-lg">
+                            <i class="bi bi-grid-3x3-gap me-2"></i>Sistemas Institucionais
+                        </a>
+                        <a href="#governamental" class="btn btn-cgti btn-lg">
+                            <i class="bi bi-grid-3x3-gap me-2"></i>Sistemas Governamentais
                         </a>
                     </div>
                 </div>
             </div>
         </div>
-    </section>-->
+    </section>
 
     <!-- Serviços Principais -->
-    <section class="mb-5">
+    <section class="mb-5" id="garanhuns">
         <div class="row mb-4">
             <div class="col-12 text-center">
                 <h2 class="fw-bold mb-3">Nossos Serviços - Campus Garanhuns</h2>
@@ -46,7 +51,9 @@ nossos serviços e sistemas.')
                 <div class="card service-card h-100">
                     <div class="card-body">
                         <div class="service-icon">
-                            <i class="bi bi-{{ $servico->icon ?? 'car' }}"></i>
+                            <!-- Substitui o ícone do Bootstrap por uma imagem -->
+                            <img src="{{asset(('storage/' . $servico->icon ?? 'default'))}}" alt="{{ $servico->name }}"
+                                style="width: 70px; height: 70px;">
                         </div>
                         <h5 class="card-title">{{ $servico->name }}</h5>
                         <p class="card-text text-muted">{{ $servico->description }}</p>
@@ -62,7 +69,7 @@ nossos serviços e sistemas.')
 
     <!-- Serviços Internos -->
     @if($servicosInternos->count() > 0)
-    <section class="mb-5">
+    <section class="mb-5" id="internos">
         <div class="row mb-4">
             <div class="col-12 text-center">
                 <h3 class="fw-bold mb-3">Serviços Internos</h3>
@@ -76,7 +83,9 @@ nossos serviços e sistemas.')
                 <div class="card service-card h-100">
                     <div class="card-body">
                         <div class="service-icon">
-                            <i class="bi bi-{{ $servico->icon ?? 'car' }}"></i>
+                            <!-- Substitui o ícone do Bootstrap por uma imagem -->
+                            <img src="{{asset(('storage/' . $servico->icon ?? 'default'))}}" alt="{{ $servico->name }}"
+                                style="width: 70px; height: 70px;">
                         </div>
                         <h5 class="card-title">{{ $servico->name }}</h5>
                         <p class="card-text text-muted">{{ $servico->description }}</p>
@@ -93,7 +102,7 @@ nossos serviços e sistemas.')
 
     <!-- Serviços Institucionais -->
     @if($servicosInstitucional->count() > 0)
-    <section class="mb-5">
+    <section class="mb-5" id="institucional">
         <div class="row mb-4">
             <div class="col-12 text-center">
                 <h3 class="fw-bold mb-3">Sistemas Institucionais</h3>
@@ -107,7 +116,9 @@ nossos serviços e sistemas.')
                 <div class="card service-card h-100">
                     <div class="card-body">
                         <div class="service-icon">
-                            <i class="bi bi-{{ $servico->icon ?? 'car' }}"></i>
+                            <!-- Substitui o ícone do Bootstrap por uma imagem -->
+                            <img src="{{asset(('storage/' . $servico->icon ?? 'default'))}}" alt="{{ $servico->name }}"
+                                style="width: 70px; height: 70px;">
                         </div>
                         <h5 class="card-title">{{ $servico->name }}</h5>
                         <p class="card-text text-muted">{{ $servico->description }}</p>
@@ -123,7 +134,7 @@ nossos serviços e sistemas.')
     @endif
     <!-- Serviços governamentais -->
     @if($servicosGovernamental->count() > 0)
-    <section class="mb-5">
+    <section class="mb-5" id="governamental">
         <div class="row mb-4">
             <div class="col-12 text-center">
                 <h3 class="fw-bold mb-3">Sistemas Governamentais</h3>
@@ -137,7 +148,9 @@ nossos serviços e sistemas.')
                 <div class="card service-card h-100">
                     <div class="card-body">
                         <div class="service-icon">
-                            <i class="bi bi-{{ $servico->icon ?? 'car' }}"></i>
+                            <!-- Substitui o ícone do Bootstrap por uma imagem -->
+                            <img src="{{asset(('storage/' . $servico->icon ?? 'default'))}}" alt="{{ $servico->name }}"
+                                style="width: 70px; height: 70px;">
                         </div>
                         <h5 class="card-title">{{ $servico->name }}</h5>
                         <p class="card-text text-muted">{{ $servico->description }}</p>

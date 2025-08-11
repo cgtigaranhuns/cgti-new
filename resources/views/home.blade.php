@@ -46,7 +46,9 @@ nossos serviços e sistemas.')
                 <div class="card service-card h-100">
                     <div class="card-body">
                         <div class="service-icon">
-                            <i class="bi bi-{{ $servico->icon ?? 'gear' }}"></i>
+                            <!-- Substitui o ícone do Bootstrap por uma imagem -->
+                            <img src="{{ asset(($servico->icon ?? 'default'))}}" alt="{{ $servico->name }}"
+                                style="width: 70px; height: 70px;">
                         </div>
                         <h5 class="card-title">{{ $servico->name }}</h5>
                         <p class="card-text text-muted">{{ $servico->description }}</p>
@@ -75,7 +77,9 @@ nossos serviços e sistemas.')
             <div class="col-md-6 col-lg-3">
                 <div class="card border-0 bg-light h-100">
                     <div class="card-body text-center">
-                        <i class="bi bi-{{ $servico->icon ?? 'gear' }} text-primary fs-2 mb-3"></i>
+                        <!-- Substitui o ícone do Bootstrap por uma imagem -->
+                        <img src="{{ asset(($servico->icon ?? 'default'))}}" alt="{{ $servico->name }}"
+                            style="width: 70px; height: 70px;">
                         <h6 class="card-title">{{ $servico->name }}</h6>
                         <a href="{{ $servico->url }}" target="_blank" class="btn btn-sm btn-outline-primary">
                             Acessar

@@ -33,8 +33,16 @@ class ServicoResource extends Resource
                 Forms\Components\TextInput::make('url')
                     ->required()
                     ->maxLength(255),
-                Forms\Components\TextInput::make('icon')
-                    ->maxLength(255),
+                // Campo de upload do ícone
+                Forms\Components\FileUpload::make('icon')
+                    ->label('Ícone')
+                    ->directory('img/icons')
+                    ->disk('public')
+                    ->preserveFilenames()
+                    ->image()
+                    ->maxSize(1024)
+                    ->required(false)
+                    ->helperText('Envie um arquivo PNG ou SVG para o ícone'),
                 Forms\Components\TextInput::make('category')
                     ->required()
                     ->maxLength(255)
