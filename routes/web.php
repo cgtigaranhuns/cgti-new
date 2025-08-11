@@ -6,8 +6,10 @@ use App\Http\Controllers\InformeController;
 use App\Http\Controllers\EquipeController;
 use App\Http\Controllers\DocumentoController;
 use App\Http\Controllers\ProcessoController;
-use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\ServicoController;
+/*use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\InformeController as AdminInformeController;
+use App\Http\Controllers\Admin\ServicoController as AdminServicoController;*/
 
 /*
 |--------------------------------------------------------------------------
@@ -19,6 +21,7 @@ use App\Http\Controllers\Admin\InformeController as AdminInformeController;
 Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/apresentacao', [HomeController::class, 'apresentacao'])->name('apresentacao');
 Route::get('/contato', [HomeController::class, 'contato'])->name('contato');
+Route::get('/servicos', [servicoController::class, 'index'])->name('servicos');
 Route::post('/contato', [HomeController::class, 'enviarContato'])->name('contato.enviar');
 
 // Informes
@@ -39,8 +42,8 @@ Route::get('/processos/{processo}', [ProcessoController::class, 'show'])->name('
 Route::get('/processos/{processo}/download', [ProcessoController::class, 'download'])->name('processos.download');
 
 // Autenticação
-Auth::routes(['register' => false]);
-
+//Auth::routes(['register' => false]);
+/*
 // Área Administrativa (protegida por middleware auth e admin)
 Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(function () {
     // Dashboard
@@ -57,6 +60,13 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
     
     // Equipe
     Route::resource('equipe', EquipeController::class)->except(['show']);
+    // Serviços
+    Route::resource('servicos', AdminServicoController::class)->except(['show', 'create', 'store', 'edit', 'update', 'destroy']);
+    Route::get('servicos/create', [AdminServicoController::class, 'create'])->name('servicos.create');
+    Route::post('servicos', [ServicoController::class, 'store'])->name('servicos.store');
+    Route::get('servicos/{servico}/edit', [ServicoController::class, 'edit'])->name('servicos.edit');
+    Route::put('servicos/{servico}', [ServicoController::class, 'update'])->name('servicos.update');
+    Route::delete('servicos/{servico}', [ServicoController::class, 'destroy'])->name('servicos.destroy');
 });
 
 // Redirecionamento após login
@@ -65,5 +75,4 @@ Route::get('/home', function () {
         return redirect()->route('admin.dashboard');
     }
     return redirect()->route('home');
-})->middleware('auth')->name('dashboard');
-
+})->middleware('auth')->name('dashboard');*/

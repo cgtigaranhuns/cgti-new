@@ -22,7 +22,7 @@ class Servico extends Model
 
     protected $casts = [
         'active' => 'boolean',
-        'internal' => 'boolean',
+        //'internal' => 'boolean',
     ];
 
     // Scopes
@@ -51,4 +51,3 @@ class Servico extends Model
         return $query->orderBy('order');
     }
 }
-
