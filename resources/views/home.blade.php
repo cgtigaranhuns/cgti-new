@@ -47,7 +47,7 @@ nossos serviços e sistemas.')
                     <div class="card-body">
                         <div class="service-icon">
                             <!-- Substitui o ícone do Bootstrap por uma imagem -->
-                            <img src="{{ asset(($servico->icon ?? 'default'))}}" alt="{{ $servico->name }}"
+                            <img src="{{ asset(('storage/' .$servico->icon ?? 'default'))}}" alt="{{ $servico->name }}"
                                 style="width: 70px; height: 70px;">
                         </div>
                         <h5 class="card-title">{{ $servico->name }}</h5>
@@ -78,7 +78,7 @@ nossos serviços e sistemas.')
                 <div class="card border-0 bg-light h-100">
                     <div class="card-body text-center">
                         <!-- Substitui o ícone do Bootstrap por uma imagem -->
-                        <img src="{{ asset(($servico->icon ?? 'default'))}}" alt="{{ $servico->name }}"
+                        <img src="{{ asset(('storage/' . $servico->icon ?? 'default'))}}" alt="{{ $servico->name }}"
                             style="width: 70px; height: 70px;">
                         <h6 class="card-title">{{ $servico->name }}</h6>
                         <a href="{{ $servico->url }}" target="_blank" class="btn btn-sm btn-outline-primary">
