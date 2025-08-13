@@ -35,7 +35,7 @@
                             </a></li>
                         <li><a class="dropdown-item"
                                 href="{{ route('processos.index', ['categoria' => 'legislacao']) }}">
-                                <i class="bi bi-file-earmark-text me-2"></i>Processos
+                                <i class="bi bi-diagram-3 me-2"></i>Processos
                             </a></li>
                         <li>
                             <hr class="dropdown-divider">
