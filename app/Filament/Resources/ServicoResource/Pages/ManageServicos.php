@@ -13,7 +13,11 @@ class ManageServicos extends ManageRecords
     protected function getHeaderActions(): array
     {
         return [
-            Actions\CreateAction::make(),
+            Actions\CreateAction::make()
+                ->label('Adicionar Serviço')
+                ->modalHeading('Adicionar Serviço')
+                ->icon('heroicon-s-plus-circle')
+                ->color('primary'),
         ];
     }
 }

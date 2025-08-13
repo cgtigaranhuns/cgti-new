@@ -17,33 +17,46 @@ class UserResource extends Resource
 {
     protected static ?string $model = User::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'heroicon-s-user-circle';
+    protected static ?int $navigationSort = 3;
+    protected static ?string $navigationLabel = 'Usuários';
+    protected static ?string $slug = 'usuarios';
+    protected static ?string $pluralModelLabel = 'Usuários';
 
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
                 Forms\Components\TextInput::make('name')
+                    ->label('Nome Completo')
                     ->required()
                     ->maxLength(255),
                 Forms\Components\TextInput::make('email')
+                    ->label('E-mail')
                     ->email()
                     ->required()
                     ->maxLength(255),
-                Forms\Components\DateTimePicker::make('email_verified_at'),
                 Forms\Components\TextInput::make('password')
+                    ->label('Senha')
+                    ->dehydrated(fn ($state) => filled($state))
+                    ->confirmed()
                     ->password()
                     ->required()
                     ->maxLength(255),
                 Forms\Components\TextInput::make('role')
+                    ->label('Perfil')
                     ->required()
                     ->maxLength(255)
                     ->default('user'),
                 Forms\Components\Toggle::make('active')
+                    ->label('Status')
+                    ->default(true)
                     ->required(),
                 Forms\Components\TextInput::make('department')
+                    ->label('Departamento')
                     ->maxLength(255),
                 Forms\Components\TextInput::make('phone')
+                    ->label('Telefone')
                     ->tel()
                     ->maxLength(255),
             ]);
@@ -54,35 +67,30 @@ class UserResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('name')
+                    ->label('Nome Completo')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('email')
+                    ->label('E-mail')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('email_verified_at')
-                    ->dateTime()
-                    ->sortable(),
+                
                 Tables\Columns\TextColumn::make('role')
+                    ->label('Perfil')
                     ->searchable(),
                 Tables\Columns\IconColumn::make('active')
+                    ->label('Status')
+                    
                     ->boolean(),
                 Tables\Columns\TextColumn::make('department')
+                    ->label('Departamento')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('phone')
-                    ->searchable(),
-                Tables\Columns\TextColumn::make('created_at')
-                    ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
-                Tables\Columns\TextColumn::make('updated_at')
-                    ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
+                
             ])
             ->filters([
                 //
             ])
             ->actions([
-                Tables\Actions\EditAction::make(),
-                Tables\Actions\DeleteAction::make(),
+                Tables\Actions\EditAction::make()->label('')->modalHeading('Editar Usuário'),
+                Tables\Actions\DeleteAction::make()->label(''),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([

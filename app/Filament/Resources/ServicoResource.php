@@ -17,20 +17,29 @@ class ServicoResource extends Resource
 {
     protected static ?string $model = Servico::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'heroicon-s-cursor-arrow-ripple';
+    protected static ?int $navigationSort = 1;
+    protected static ?string $navigationLabel = 'Serviços';
+    protected static ?string $slug = 'servicos';
+    protected static ?string $pluralModelLabel = 'Serviços';
 
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
                 Forms\Components\TextInput::make('name')
+                    ->label('Serviço/Sistema')
                     ->required()
                     ->maxLength(255),
                 Forms\Components\Textarea::make('description')
+                    ->label('Descrição')
                     ->required()
                     ->maxLength(65535)
                     ->columnSpanFull(),
+        
                 Forms\Components\TextInput::make('url')
+                    ->label('Link')
+                    ->url()
                     ->required()
                     ->maxLength(255),
                 // Campo de upload do ícone
@@ -44,12 +53,16 @@ class ServicoResource extends Resource
                     ->required(false)
                     ->helperText('Envie um arquivo PNG ou SVG para o ícone'),
                 Forms\Components\TextInput::make('category')
+                    ->label('Categoria')
                     ->required()
                     ->maxLength(255)
                     ->default('geral'),
                 Forms\Components\Toggle::make('active')
+                    ->label('Status')
+                    ->default(true)
                     ->required(),
                 Forms\Components\select::make('internal')
+                    ->label('Tipo de acesso')   
                     ->options([
                         0 => 'Público',
                         1 => 'Interno',
@@ -57,10 +70,10 @@ class ServicoResource extends Resource
                         3 => 'Governamental',
                     ])
                     ->required(),
-                Forms\Components\TextInput::make('order')
+               /* Forms\Components\TextInput::make('order')
                     ->required()
                     ->numeric()
-                    ->default(0),
+                    ->default(0),*/
             ]);
     }
 
@@ -75,24 +88,22 @@ class ServicoResource extends Resource
                     ->label('Link')
                     ->limit(35)
                     ->searchable(),
-               
-                
                 Tables\Columns\IconColumn::make('active')
-                ->label('Ativo')
+                    ->label('Ativo')
                     ->boolean(),
                 Tables\Columns\TextColumn::make('internal')
                     ->label('Tipo')
                     ->formatStateUsing(function ($state) {
                         // Converta para inteiro se necessário
-    $state = is_numeric($state) ? (int)$state : $state;
-    
-    return match($state) {
-        0 => 'Público',
-        1 => 'Interno',
-        2 => 'Institucional',
-        3 => 'Governamental',
-        default => 'Desconhecido (Valor: ' . json_encode($state) . ')',
-    };
+                        $state = is_numeric($state) ? (int)$state : $state;
+                        
+                        return match($state) {
+                            0 => 'Público',
+                            1 => 'Interno',
+                            2 => 'Institucional',
+                            3 => 'Governamental',
+                            default => 'Desconhecido (Valor: ' . json_encode($state) . ')',
+                        };
                     })
                     ->searchable(),
                
@@ -101,7 +112,7 @@ class ServicoResource extends Resource
                 //
             ])
             ->actions([
-                Tables\Actions\EditAction::make()->label(''),
+                Tables\Actions\EditAction::make()->label('')->modalHeading('Editar Serviço'),
                 Tables\Actions\DeleteAction::make()->label(''),
             ])
             ->bulkActions([

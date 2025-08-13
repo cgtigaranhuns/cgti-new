@@ -13,7 +13,11 @@ class ManageInformes extends ManageRecords
     protected function getHeaderActions(): array
     {
         return [
-            Actions\CreateAction::make(),
+            Actions\CreateAction::make()
+            ->label('Adicionar Informe')
+                ->modalHeading('Adicionar Informe')
+                ->icon('heroicon-s-plus-circle')
+                ->color('primary'),
         ];
     }
 }
