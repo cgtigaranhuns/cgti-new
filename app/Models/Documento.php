@@ -70,7 +70,7 @@ class Documento extends Model
     public function getArquivoUrlAttribute()
     {
         if ($this->arquivo_path) {
-            return asset('storage/' . $this->arquivo_path);
+           return $this->arquivo_path ? asset('storage/'.$this->arquivo_path) : null;
         }
         return null;
     }
@@ -109,5 +109,5 @@ class Documento extends Model
             'outros' => 'Outros Documentos'
         ];
     }
-}
 
+}

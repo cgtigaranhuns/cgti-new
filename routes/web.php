@@ -39,6 +39,7 @@ Route::get('/documentos/{documento}/download', [DocumentoController::class, 'dow
 // Processos
 Route::get('/processos', [ProcessoController::class, 'index'])->name('processos.index');
 Route::get('/processos/{processo}', [ProcessoController::class, 'show'])->name('processos.show');
+Route::get('/processos/coordenacao/{categoria}', [ProcessoController::class, 'porCoordenacao'])->name('processos.por-coordenacao');
 Route::get('/processos/{processo}/download', [ProcessoController::class, 'download'])->name('processos.download');
 
 // Autenticação

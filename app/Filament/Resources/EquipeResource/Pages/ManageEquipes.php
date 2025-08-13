@@ -13,7 +13,11 @@ class ManageEquipes extends ManageRecords
     protected function getHeaderActions(): array
     {
         return [
-            Actions\CreateAction::make(),
+            Actions\CreateAction::make()
+                ->label('Adicionar Membro')
+                ->modalHeading('Adicionar Membro da Equipe')
+                ->icon('heroicon-o-plus-circle')
+                ->color('primary'),
         ];
     }
 }

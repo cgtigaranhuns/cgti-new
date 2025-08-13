@@ -16,7 +16,7 @@ class ManageServicos extends ManageRecords
             Actions\CreateAction::make()
                 ->label('Adicionar Serviço')
                 ->modalHeading('Adicionar Serviço')
-                ->icon('heroicon-s-plus-circle')
+                ->icon('heroicon-o-plus-circle')
                 ->color('primary'),
         ];
     }

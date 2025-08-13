@@ -16,7 +16,7 @@ class ManageInformes extends ManageRecords
             Actions\CreateAction::make()
             ->label('Adicionar Informe')
                 ->modalHeading('Adicionar Informe')
-                ->icon('heroicon-s-plus-circle')
+                ->icon('heroicon-o-plus-circle')
                 ->color('primary'),
         ];
     }

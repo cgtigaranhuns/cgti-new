@@ -19,7 +19,7 @@ class ManageUsers extends ManageRecords
             Actions\CreateAction::make()
                 ->label('Adicionar Usuário')
                 ->modalHeading('Adicionar Usuário')
-                ->icon('heroicon-s-plus-circle')
+                ->icon('heroicon-o-plus-circle')
                 ->color('primary'),
         ];
     }

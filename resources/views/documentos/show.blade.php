@@ -211,7 +211,7 @@
 @push('scripts')
 <script>
 function compartilharDocumento() {
-    const titulo = @json($documento - > titulo);
+    const titulo = '{{ $documento->titulo }}';
     const url = window.location.href;
 
     if (navigator.share) {

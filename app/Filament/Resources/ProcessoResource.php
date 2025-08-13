@@ -5,50 +5,92 @@ namespace App\Filament\Resources;
 use App\Filament\Resources\ProcessoResource\Pages;
 use App\Filament\Resources\ProcessoResource\RelationManagers;
 use App\Models\Processo;
+use App\Models\User;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Str;
 
 class ProcessoResource extends Resource
 {
     protected static ?string $model = Processo::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'heroicon-o-document-text';
+
+    protected static ?string $modelLabel = 'Processo';
+    protected static ?string $pluralModelLabel = 'Processos';
 
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('user_id')
-                    ->required()
-                    ->numeric(),
-                Forms\Components\TextInput::make('titulo')
-                    ->required()
-                    ->maxLength(255),
-                Forms\Components\Textarea::make('descricao')
-                    ->maxLength(65535)
-                    ->columnSpanFull(),
-                Forms\Components\TextInput::make('categoria')
-                    ->required()
-                    ->maxLength(255),
-                Forms\Components\TextInput::make('arquivo_path')
-                    ->maxLength(255),
-                Forms\Components\TextInput::make('arquivo_nome')
-                    ->maxLength(255),
-                Forms\Components\TextInput::make('arquivo_tamanho')
-                    ->numeric(),
-                Forms\Components\TextInput::make('arquivo_tipo')
-                    ->maxLength(255),
-                Forms\Components\Toggle::make('ativo')
-                    ->required(),
-                Forms\Components\TextInput::make('downloads')
-                    ->required()
-                    ->numeric()
-                    ->default(0),
+                Forms\Components\Section::make('Informações do Processo')
+                    ->schema([
+                        Forms\Components\TextInput::make('titulo')
+                            ->required()
+                            ->maxLength(255)
+                            ->columnSpanFull(),
+                            
+                        Forms\Components\Textarea::make('descricao')
+                            ->maxLength(65535)
+                            ->columnSpanFull(),
+                            
+                        Forms\Components\Select::make('categoria')
+                            ->required()
+                            ->options(Processo::getCategorias())
+                            ->native(false),
+                    ])->columns(2),
+                    
+                Forms\Components\Section::make('Diagrama do Processo')
+                    ->schema([
+                        Forms\Components\FileUpload::make('arquivo_path')
+                            ->label('Arquivo do Diagrama')
+                            ->required()
+                            ->directory('processos-diagramas')
+                            ->preserveFilenames()
+                            ->maxSize(10240) // 10MB
+                            ->acceptedFileTypes([
+                                'application/pdf',
+                                'image/png',
+                                'image/jpeg',
+                                'image/svg+xml',
+                            ])
+                            ->downloadable()
+                            ->openable()
+                            ->previewable(false)
+                            ->afterStateUpdated(function ($state, Forms\Set $set) {
+                                if ($state) {
+                                    $set('arquivo_nome', $state->getClientOriginalName());
+                                    $set('arquivo_tipo', $state->getClientMimeType());
+                                    $set('arquivo_tamanho', $state->getSize());
+                                }
+                            }),
+                            
+                        Forms\Components\Hidden::make('arquivo_nome'),
+                        Forms\Components\Hidden::make('arquivo_tipo'),
+                        Forms\Components\Hidden::make('arquivo_tamanho'),
+                    ]),
+                    
+                Forms\Components\Section::make('Configurações')
+                    ->schema([
+                        Forms\Components\Toggle::make('ativo')
+                            ->required()
+                            ->default(true),
+                            
+                        Forms\Components\Select::make('user_id')
+                            ->label('Responsável')
+                            ->relationship('user', 'name')
+                            ->default(Auth::id())
+                            ->required()
+                            ->searchable()
+                            ->preload(),
+                            
+                        Forms\Components\Hidden::make('downloads')
+                            ->default(0),
+                    ])->columns(2),
             ]);
     }
 
@@ -56,42 +98,61 @@ class ProcessoResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('user_id')
-                    ->numeric()
-                    ->sortable(),
                 Tables\Columns\TextColumn::make('titulo')
-                    ->searchable(),
+                    ->searchable()
+                    ->sortable()
+                    ->wrap()
+                    ->description(fn (Processo $record) => Str::limit($record->descricao, 50)),
+                    
                 Tables\Columns\TextColumn::make('categoria')
+                    ->badge()
+                    ->formatStateUsing(fn ($state) => Processo::getCategorias()[$state] ?? $state)
+                    ->color(fn (string $state): string => match ($state) {
+                        'cgti' => 'primary',
+                        'cgpe' => 'success',
+                        'aspe' => 'info',
+                        'ccli' => 'warning',
+                        'crat' => 'danger',
+                        'cpgd' => 'secondary',
+                        default => 'gray',
+                    })
                     ->searchable(),
-                Tables\Columns\TextColumn::make('arquivo_path')
-                    ->searchable(),
-                Tables\Columns\TextColumn::make('arquivo_nome')
-                    ->searchable(),
+                    
                 Tables\Columns\TextColumn::make('arquivo_tamanho')
-                    ->numeric()
+                    ->label('Tamanho')
+                    ->formatStateUsing(fn ($state, Processo $record) => $record->arquivo_tamanho_formatado)
                     ->sortable(),
-                Tables\Columns\TextColumn::make('arquivo_tipo')
-                    ->searchable(),
+                    
                 Tables\Columns\IconColumn::make('ativo')
-                    ->boolean(),
-                Tables\Columns\TextColumn::make('downloads')
-                    ->numeric()
+                    ->label('Ativo')
+                    ->boolean()
                     ->sortable(),
-                Tables\Columns\TextColumn::make('created_at')
-                    ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
-                Tables\Columns\TextColumn::make('updated_at')
-                    ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
-                //
+                Tables\Filters\SelectFilter::make('categoria')
+                    ->options(Processo::getCategorias())
+                    ->label('Coordenação'),
+                    
+                Tables\Filters\TernaryFilter::make('ativo')
+                    ->label('Status')
+                    ->trueLabel('Ativos')
+                    ->falseLabel('Inativos')
+                    ->native(false),
             ])
             ->actions([
-                Tables\Actions\EditAction::make(),
-                Tables\Actions\DeleteAction::make(),
+                
+                    
+                Tables\Actions\Action::make('download')
+                    ->label('')
+                    ->icon('heroicon-o-arrow-down-tray')
+                    ->url(fn (Processo $record) => $record->arquivo_url)
+                    ->openUrlInNewTab(),
+                    
+                Tables\Actions\EditAction::make()
+                    ->label(''),
+                    
+                Tables\Actions\DeleteAction::make()
+                    ->label(''),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
@@ -100,7 +161,8 @@ class ProcessoResource extends Resource
             ])
             ->emptyStateActions([
                 Tables\Actions\CreateAction::make(),
-            ]);
+            ])
+            ->defaultSort('created_at', 'desc');
     }
     
     public static function getPages(): array
@@ -108,5 +170,5 @@ class ProcessoResource extends Resource
         return [
             'index' => Pages\ManageProcessos::route('/'),
         ];
-    }    
+    }
 }

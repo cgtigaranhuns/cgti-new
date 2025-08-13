@@ -8,27 +8,26 @@ use Illuminate\Support\Facades\Storage;
 
 class ProcessoController extends Controller
 {
-    public function index(Request $request)
-    {
-        $categoria = $request->get('categoria');
-        $search = $request->get('search');
-        
-        $processos = Processo::ativo()
-            ->when($categoria, function ($query, $categoria) {
-                return $query->categoria($categoria);
-            })
-            ->when($search, function ($query, $search) {
-                return $query->where('titulo', 'like', "%{$search}%")
-                           ->orWhere('descricao', 'like', "%{$search}%");
-            })
-            ->orderBy('categoria')
-            ->orderBy('titulo')
-            ->paginate(20);
+    public function index()
+{
+    $processos = Processo::query()
+        ->when(request('search'), function ($query) {
+            $query->where('titulo', 'like', '%'.request('search').'%');
+        })
+        ->orderBy('created_at', 'desc')
+        ->paginate(10);
 
-        $categorias = Processo::getCategorias();
-        
-        return view('processos.index', compact('processos', 'categorias', 'categoria', 'search'));
-    }
+    return view('processos.index', compact('processos'));
+}
+
+public function porCoordenacao($categoria)
+{
+    $processos = Processo::where('categoria', $categoria)
+        ->orderBy('created_at', 'desc')
+        ->paginate(10);
+
+    return view('processos.processos-por-coordenacao', compact('processos', 'categoria'));
+}
 
     public function show(Processo $processo)
     {
@@ -144,4 +143,3 @@ class ProcessoController extends Controller
         return redirect()->route('admin.processos.index')->with('success', 'Processo excluído com sucesso!');
     }
 }
-

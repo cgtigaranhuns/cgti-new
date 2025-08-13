@@ -48,10 +48,8 @@ class Processo extends Model
     // Accessors
     public function getArquivoTamanhoFormatadoAttribute()
     {
-        if (!$this->arquivo_tamanho) {
-            return 'N/A';
-        }
-
+        if (!$this->arquivo_tamanho) return 'N/A';
+        
         $bytes = $this->arquivo_tamanho;
         $units = ['B', 'KB', 'MB', 'GB'];
         
@@ -64,10 +62,7 @@ class Processo extends Model
 
     public function getArquivoUrlAttribute()
     {
-        if ($this->arquivo_path) {
-            return asset('storage/' . $this->arquivo_path);
-        }
-        return null;
+         return $this->arquivo_path ? asset('storage/'.$this->arquivo_path) : null;
     }
 
     // Métodos
@@ -90,4 +85,3 @@ class Processo extends Model
         ];
     }
 }
-

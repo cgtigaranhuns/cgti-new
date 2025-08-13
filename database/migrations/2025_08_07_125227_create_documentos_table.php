@@ -15,10 +15,10 @@ return new class extends Migration
             $table->id();
             $table->string('titulo');
             $table->text('descricao')->nullable();
-            $table->string('file_path');
-            $table->string('file_name');
-            $table->string('file_type');
-            $table->integer('file_size');
+            $table->string('arquivo_path');
+            $table->string('arquivo_nome');
+            $table->string('arquivo_tipo');
+            $table->integer('arquivo_tamanho');
             $table->string('categoria'); // manuais, normas, legislacao
             $table->boolean('ativo')->default(true);
             $table->integer('downloads')->default(0);

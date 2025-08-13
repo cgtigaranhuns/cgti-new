@@ -18,7 +18,7 @@ class ServicoResource extends Resource
     protected static ?string $model = Servico::class;
 
     protected static ?string $navigationIcon = 'heroicon-s-cursor-arrow-ripple';
-    protected static ?int $navigationSort = 1;
+    protected static ?int $navigationSort = 2;
     protected static ?string $navigationLabel = 'Serviços';
     protected static ?string $slug = 'servicos';
     protected static ?string $pluralModelLabel = 'Serviços';
