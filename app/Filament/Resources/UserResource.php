@@ -43,6 +43,12 @@ class UserResource extends Resource
                     ->password()
                     ->required()
                     ->maxLength(255),
+                Forms\Components\TextInput::make('password_confirmation')
+                    ->label('Confirmar Senha')
+                    ->password()
+                    ->required()
+                    ->maxLength(255)
+                    ->dehydrated(false),
                 Forms\Components\TextInput::make('role')
                     ->label('Perfil')
                     ->required()
