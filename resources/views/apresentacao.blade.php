@@ -205,22 +205,6 @@ missão, visão e objetivos.')
         </div>
     </div>
 
-    <!-- Call to Action -->
-    <div class="row">
-        <div class="col-12">
-            <div class="bg-primary text-white rounded-4 p-5 text-center">
-                <h3 class="fw-bold mb-3">Quer saber mais sobre nossos serviços?</h3>
-                <p class="mb-4">Entre em contato conosco ou explore nossos sistemas e serviços disponíveis.</p>
-                <div class="d-flex flex-column flex-md-row gap-3 justify-content-center">
-                    <a href="{{ route('home') }}#servicos" class="btn btn-light btn-lg">
-                        <i class="bi bi-grid-3x3-gap me-2"></i>Ver Serviços
-                    </a>
-                    <a href="{{ route('contato') }}" class="btn btn-outline-light btn-lg">
-                        <i class="bi bi-envelope me-2"></i>Entre em Contato
-                    </a>
-                </div>
-            </div>
-        </div>
-    </div>
+
 </div>
 @endsection
