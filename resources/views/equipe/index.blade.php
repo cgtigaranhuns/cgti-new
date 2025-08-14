@@ -107,28 +107,7 @@ Garanhuns.')
         @endforelse
     </div>
 
-    <!-- Informações Adicionais -->
-    @if($membros->count() > 0)
-    <div class="row mt-5">
-        <div class="col-12">
-            <div class="bg-light rounded-4 p-5 text-center">
-                <h3 class="fw-bold text-primary mb-3">Quer fazer parte da nossa equipe?</h3>
-                <p class="mb-4 text-muted">
-                    A CGTI está sempre em busca de profissionais qualificados e dedicados.
-                    Acompanhe os processos seletivos do IFPE e venha trabalhar conosco!
-                </p>
-                <div class="d-flex flex-column flex-md-row gap-3 justify-content-center">
-                    <a href="https://www.ifpe.edu.br/concursos-e-seletivos" target="_blank" class="btn btn-cgti">
-                        <i class="bi bi-briefcase me-2"></i>Ver Oportunidades
-                    </a>
-                    <a href="{{ route('contato') }}" class="btn btn-outline-cgti">
-                        <i class="bi bi-envelope me-2"></i>Entre em Contato
-                    </a>
-                </div>
-            </div>
-        </div>
-    </div>
-    @endif
+
 </div>
 
 @push('styles')
