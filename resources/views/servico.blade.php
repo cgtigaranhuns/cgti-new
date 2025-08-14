@@ -22,7 +22,7 @@ nossos serviços e sistemas.')
                             <i class="bi bi-globe me-2"></i>Sistemas da CGTI
                         </a>
                         <a href="#internos" class="btn btn-cgti btn-lg">
-                            <i class="bi bi-geo-alt-fill me-2"></i>Sistemas da Intranet
+                            <i class="bi bi-joystick me-2"></i>Sistemas da Intranet
                         </a>
                         <a href="#institucional" class="btn btn-cgti btn-lg">
                             <i class="bi bi-info-lg me-2"></i>Sistemas Institucionais
