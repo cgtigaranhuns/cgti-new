@@ -61,7 +61,7 @@ class ServicoResource extends Resource
                     ->label('Status')
                     ->default(true)
                     ->required(),
-                Forms\Components\select::make('internal')
+                Forms\Components\Select::make('internal')
                     ->label('Tipo de acesso')   
                     ->options([
                         0 => 'Público',
