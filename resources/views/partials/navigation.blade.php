@@ -23,6 +23,12 @@
                         <i class="bi bi-folder me-1"></i>Documentos
                     </a>
                     <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="{{ route('documentos.index') }}">
+                                <i class="bi bi-files me-2"></i>Todos os Documentos
+                            </a></li>
+                        <li>
+                            <hr class="dropdown-divider">
+                        </li>
                         <li><a class="dropdown-item" href="{{ route('documentos.index', ['categoria' => 'guias']) }}">
                                 <i class="bi bi-book me-2"></i>Guias e Manuais
                             </a></li>
@@ -36,12 +42,6 @@
                         <li><a class="dropdown-item"
                                 href="{{ route('processos.index', ['categoria' => 'legislacao']) }}">
                                 <i class="bi bi-diagram-3 me-2"></i>Processos
-                            </a></li>
-                        <li>
-                            <hr class="dropdown-divider">
-                        </li>
-                        <li><a class="dropdown-item" href="{{ route('documentos.index') }}">
-                                <i class="bi bi-files me-2"></i>Todos os Documentos
                             </a></li>
                     </ul>
                 </li>
