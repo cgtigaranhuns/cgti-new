@@ -25,10 +25,10 @@ nossos serviços e sistemas.')
                             <i class="bi bi-geo-alt-fill me-2"></i>Sistemas da Intranet
                         </a>
                         <a href="#institucional" class="btn btn-cgti btn-lg">
-                            <i class="bi bi-grid-3x3-gap me-2"></i>Sistemas Institucionais
+                            <i class="bi bi-info me-2"></i>Sistemas Institucionais
                         </a>
                         <a href="#governamental" class="btn btn-cgti btn-lg">
-                            <i class="bi bi-grid-3x3-gap me-2"></i>Sistemas Governamentais
+                            <i class="bi bi-google me-2"></i>Sistemas Governamentais
                         </a>
                     </div>
                 </div>
