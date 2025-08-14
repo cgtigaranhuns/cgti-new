@@ -18,7 +18,7 @@ class EquipeResource extends Resource
     protected static ?string $model = Equipe::class;
 
     protected static ?string $navigationIcon = 'heroicon-s-user-group';
-    protected static ?int $navigationSort = 3;
+    protected static ?int $navigationSort = 5;
     protected static ?string $navigationLabel = 'Equipe';
     protected static ?string $slug = 'equipe';
     protected static ?string $pluralModelLabel = 'Equipe';
@@ -107,8 +107,8 @@ class EquipeResource extends Resource
                 //
             ])
             ->actions([
-                Tables\Actions\EditAction::make()->label('')->modalHeading('Editar Membro'),
-                Tables\Actions\DeleteAction::make()->label(''),
+                Tables\Actions\EditAction::make()->label('')->modalHeading('Editar Membro')->tooltip('Editar'),
+                Tables\Actions\DeleteAction::make()->label('')->tooltip('Excluir'),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([

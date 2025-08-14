@@ -112,8 +112,10 @@ class ServicoResource extends Resource
                 //
             ])
             ->actions([
-                Tables\Actions\EditAction::make()->label('')->modalHeading('Editar Serviço'),
-                Tables\Actions\DeleteAction::make()->label(''),
+                Tables\Actions\EditAction::make()->label('')->modalHeading('Editar Serviço')
+                ->tooltip('Editar'),
+                Tables\Actions\DeleteAction::make()->label('')
+                ->tooltip('Excluir'),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([

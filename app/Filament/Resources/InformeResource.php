@@ -11,6 +11,7 @@ use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class InformeResource extends Resource
@@ -27,9 +28,11 @@ class InformeResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('user_id')
-                    ->required()
-                    ->numeric(),
+                Forms\Components\Hidden::make('user_id')
+                   // ->relationship('user', 'name')
+                    ->default(Auth::id()),
+                    //->required()
+                    //->numeric(),
                 Forms\Components\TextInput::make('title')
                     ->label('Título')
                     ->required()
@@ -55,7 +58,7 @@ class InformeResource extends Resource
                     ->image(),
                 Forms\Components\Toggle::make('published') 
                     ->label('Publicado')
-                    ->default(false)
+                    ->default(true)
                     ->required(),
                 Forms\Components\DateTimePicker::make('published_at')
                     ->label('Data de Publicação')
@@ -73,30 +76,29 @@ class InformeResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('user_id')
-                    ->numeric()
-                    ->sortable(),
+                
                 Tables\Columns\TextColumn::make('title')
+                    ->label('Título')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('slug')
-                    ->searchable(),
-                Tables\Columns\ImageColumn::make('featured_image'),
+                
+                Tables\Columns\ImageColumn::make('featured_image')
+                    ->label('Imagem Destacada')
+                    ->disk('public')
+                    ->circular()
+                    ->size(50),
+                    //->fallbackIcon('heroicon-o-image'),
                 Tables\Columns\IconColumn::make('published')
+                    ->label('Publicado')
                     ->boolean(),
                 Tables\Columns\TextColumn::make('published_at')
+                    ->label('Data de Publicação')
                     ->dateTime()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('views')
+                    ->label('Visualizações')
                     ->numeric()
                     ->sortable(),
-                Tables\Columns\TextColumn::make('created_at')
-                    ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
-                Tables\Columns\TextColumn::make('updated_at')
-                    ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
+                
             ])
             ->filters([
                 //
@@ -104,8 +106,10 @@ class InformeResource extends Resource
             ->actions([
                 Tables\Actions\EditAction::make()
                     ->label('')
-                    ->modalHeading('Editar Informe'),
-                Tables\Actions\DeleteAction::make()->label(''),
+                    ->modalHeading('Editar Informe')
+                    ->tooltip('Editar'),
+                Tables\Actions\DeleteAction::make()->label('')
+                ->tooltip('Excluir'),
                 
             ])
             ->bulkActions([

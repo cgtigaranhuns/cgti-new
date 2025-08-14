@@ -18,8 +18,8 @@ class ProcessoResource extends Resource
 {
     protected static ?string $model = Processo::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-document-text';
-
+    protected static ?string $navigationIcon = 'heroicon-o-inbox-stack';
+    protected static ?int $navigationSort = 4;
     protected static ?string $modelLabel = 'Processo';
     protected static ?string $pluralModelLabel = 'Processos';
 
@@ -30,15 +30,18 @@ class ProcessoResource extends Resource
                 Forms\Components\Section::make('Informações do Processo')
                     ->schema([
                         Forms\Components\TextInput::make('titulo')
+                            ->label('Título/Processo')
                             ->required()
                             ->maxLength(255)
                             ->columnSpanFull(),
                             
                         Forms\Components\Textarea::make('descricao')
+                            ->label('Descrição')
                             ->maxLength(65535)
                             ->columnSpanFull(),
                             
                         Forms\Components\Select::make('categoria')
+                            ->label('Setor')
                             ->required()
                             ->options(Processo::getCategorias())
                             ->native(false),
@@ -77,6 +80,7 @@ class ProcessoResource extends Resource
                 Forms\Components\Section::make('Configurações')
                     ->schema([
                         Forms\Components\Toggle::make('ativo')
+                            ->label('Status')
                             ->required()
                             ->default(true),
                             
@@ -99,12 +103,14 @@ class ProcessoResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('titulo')
+                    ->label('Processo')
                     ->searchable()
                     ->sortable()
                     ->wrap()
                     ->description(fn (Processo $record) => Str::limit($record->descricao, 50)),
                     
                 Tables\Columns\TextColumn::make('categoria')
+                    ->label('Setor')
                     ->badge()
                     ->formatStateUsing(fn ($state) => Processo::getCategorias()[$state] ?? $state)
                     ->color(fn (string $state): string => match ($state) {
@@ -117,14 +123,25 @@ class ProcessoResource extends Resource
                         default => 'gray',
                     })
                     ->searchable(),
-                    
+                    /*
                 Tables\Columns\TextColumn::make('arquivo_tamanho')
                     ->label('Tamanho')
                     ->formatStateUsing(fn ($state, Processo $record) => $record->arquivo_tamanho_formatado)
                     ->sortable(),
-                    
+                    */
+                Tables\Columns\ImageColumn::make('arquivo_path')
+                    ->label('Diagrama')
+                    ->size(40)/*
+    ->getStateUsing(function (Processo $record) {
+        // Lógica para gerar ou retornar o caminho da miniatura
+        return $record->gerarMiniatura(); // ou qualquer lógica você tenha
+    })
+    ->extraImgAttributes(['class' => 'rounded'])*/
+                  //  ->circular()
+                   // ->roundedFull()
+                    ->default('https://via.placeholder.com/40'),
                 Tables\Columns\IconColumn::make('ativo')
-                    ->label('Ativo')
+                    ->label('Status')
                     ->boolean()
                     ->sortable(),
             ])
@@ -146,12 +163,15 @@ class ProcessoResource extends Resource
                     ->label('')
                     ->icon('heroicon-o-arrow-down-tray')
                     ->url(fn (Processo $record) => $record->arquivo_url)
-                    ->openUrlInNewTab(),
+                    ->openUrlInNewTab()
+                    ->tooltip('Baixar Diagrama'),
                     
                 Tables\Actions\EditAction::make()
+                    ->tooltip('Editar')
                     ->label(''),
                     
                 Tables\Actions\DeleteAction::make()
+                ->tooltip('Excluir')
                     ->label(''),
             ])
             ->bulkActions([
