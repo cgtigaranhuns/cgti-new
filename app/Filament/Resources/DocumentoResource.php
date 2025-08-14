@@ -33,6 +33,7 @@ class DocumentoResource extends Resource
                 Forms\Components\Section::make('Informações do Documento')
                     ->schema([
                         Forms\Components\TextInput::make('titulo')
+                            ->label('Título')
                             ->required()
                             ->maxLength(255)
                             ->columnSpanFull(),
@@ -124,6 +125,7 @@ class DocumentoResource extends Resource
                         default => 'gray',
                     }),
                 Tables\Columns\TextColumn::make('titulo')
+                    ->label('Título')
                     ->searchable()
                     ->sortable()
                     ->wrap()
